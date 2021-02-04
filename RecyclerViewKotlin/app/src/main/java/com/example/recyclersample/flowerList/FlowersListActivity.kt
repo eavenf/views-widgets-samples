@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recyclersample.addFlower.AddFlowerActivity
@@ -52,12 +53,12 @@ class FlowersListActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
         recyclerView.adapter = concatAdapter
 
-        flowersListViewModel.flowersLiveData.observe(this, {
+        flowersListViewModel.flowersLiveData.observe(this) {
             it?.let {
                 flowersAdapter.submitList(it as MutableList<Flower>)
                 headerAdapter.updateFlowerCount(it.size)
             }
-        })
+        }
 
         val fab: View = findViewById(R.id.fab)
         fab.setOnClickListener {
